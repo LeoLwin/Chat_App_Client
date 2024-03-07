@@ -6,9 +6,11 @@ import { v4 as uuidv4 } from 'uuid';
 const ChatFooter = ({ socket }) => {
     const [message, setMessage] = useState('');
 
+
     const handleTyping = () =>
         socket.emit('typing', `${localStorage.getItem('user')} is typing`);
 
+    
 
     const saveMessage = async (newMessage) => {
         try {
@@ -31,7 +33,7 @@ const ChatFooter = ({ socket }) => {
             const newMessage = {
                 message_id: uuidv4(),
                 sender_id: userId,
-                receiver_id: 7,
+                receiver_id: 1,
                 message: message,
                 timestamp: new Date().toISOString(),
                 group_id: 1,

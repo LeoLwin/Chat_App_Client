@@ -11,6 +11,10 @@ const Home = ({ socket }) => {
   const login = async (e) => {
     try {
       e.preventDefault();
+      if (localStorage.getItem("user") === loginData.name) {
+        alert("Already logged in!"); // Show alert message
+        return; // Stop further execution
+      }
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}/login`,
         loginData
@@ -18,7 +22,8 @@ const Home = ({ socket }) => {
       // console.log("user_Id", res.data.user.id)
       localStorage.setItem("user", res.data.user.name)
       localStorage.setItem("userid", res.data.user.id)
-      socket.emit("joinRoom", { socketID: socket.id, data: res.data.user }); // Emit joinRoom event
+      localStorage.setItem("socketId", socket.id)
+      socket.emit("joinRoom", { socketId: socket.id, data: res.data.user });      // Emit joinRoom event
       navigate("/chat");
     } catch (error) {
       return (error);
@@ -31,7 +36,7 @@ const Home = ({ socket }) => {
       ...loginData,
       [e.target.name]: e.target.value,
     };
-    console.log(data);
+    // console.log(data);
     setLoginData(data);
   };
 

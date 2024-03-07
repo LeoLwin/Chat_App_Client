@@ -11,21 +11,20 @@ const ChatBar = ({ socket }) => {
     // }, [socket,]);
 
     useEffect(() => {
-        socket.on("userJoined", data => setUsers(data))
+        socket.on("userJoined", data => setUsers(data));
         return () => {
             socket.off("userJoined");
-        };
-
+        };        
     }, [socket])
 
-    console.log(users);
+    
     return (
         <div className="chat__sidebar">
             <h2>Open Chat</h2>
             <div>
                 <h4 className="chat__header">ACTIVE USERS</h4>
                 <div className="chat__users">
-                    {users.map(user => <p key={user.socketID}>
+                    {users.map(user => <p key={user.data.id}>
                         {user.data.name}</p>)}
                 </div>
             </div>
@@ -72,7 +71,7 @@ export default ChatBar;
 //                 </div>
 //             </div>
 //         </div>
-//     );
+//     );   
 // };
 // ChatBar.propTypes = {
 //     socket: PropTypes.object.isRequired, // Define PropTypes for the socket prop
